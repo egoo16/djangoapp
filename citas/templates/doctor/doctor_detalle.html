@@ -1,0 +1,12 @@
+{% extends 'doctor/base.html' %}
+
+   {% block content %}
+       <div class="Paciente">
+           {% if doctores.nombre %}
+           {% endif %}
+           <a class="btn btn-default" href="{% url 'doctor_editar' pk=doctores.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+           <h4>Nombre: {{ doctores.nombre }}</h4>
+           <h4>Clinica: {{ doctores.nombre }}</h4>
+           <h1>Telefono: {{ doctores.telefono }}</h1>
+       </div>
+   {% endblock %}

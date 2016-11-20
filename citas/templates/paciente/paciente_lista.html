@@ -1,0 +1,8 @@
+{% extends 'paciente/base.html' %}
+{% block content %}
+    {% for post in pacientes %}
+        <div class="pacientes">
+            <h1><a href="{% url 'citas.views.paciente_detalle' pk=post.pk %}">{{ post.nombre }}</a></h1>
+        </div>
+    {% endfor %}
+{% endblock content %}

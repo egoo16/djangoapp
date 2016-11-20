@@ -1,0 +1,14 @@
+{% extends 'citas/base.html' %}
+
+   {% block content %}
+       <div class="Cita">
+           {% if citas.fecha %}
+
+           {% endif %}
+           <a class="btn btn-default" href="{% url 'cita_editar' pk=citas.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+           <h4>Hora de atención: {{ citas.hora }}</h4>
+           <h1>Doctor: {{ citas.doctor }}</h1>
+           <h4>Observaciones: {{ citas.obs }}</h4>
+           <h3>Paciente: {{ citas.paciente|linebreaksbr }}</h3>
+       </div>
+   {% endblock %}

@@ -1,25 +1,112 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .forms import CitaForm
+from .forms import CitaForm, PacienteForm, DoctorForm
 from citas.models import Doctor, Paciente, Cita
 
-#Vista para insertar una nueva película y los actores que actúan en ella.
+def cita_lista(request):
+    citas = Cita.objects.all
+    return render(request, 'citas/cita_lista.html', {'citas':citas})
+
+def cita_detalle(request, pk):
+    citas = get_object_or_404(Cita, pk=pk)
+    return render(request, 'citas/cita_detalle.html', {'citas': citas})
+
 def cita_nueva(request):
     if request.method == "POST":
-#Creamos un objeto que va a contener todos los datos que el formulario PeliculaForm nos manda a través del método POST
         formulario = CitaForm(request.POST)
         if formulario.is_valid():
-#Guardamos primero la Película, para que exista un ID para relacionar a los actores en la tabla Actuaciones
-#Como el formulario incluye campos de varias tablas, aquí es necesario indicar los campos que corresponden a Película.
-            cita = Cita.objects.create(nombre=formulario.cleaned_data['nombre'])
-#Por cada actor que esté seleccionado en el formulario, recorrerlo para guardarlo en la tabla Actuación
-            for actor_id in request.POST.getlist('actores'):
-#A la tabla Actuación le decimos cual es el ID del Actor y el ID de Película
-               actuacion = Actuacion(actor_id=actor_id, pelicula_id = pelicula.id)
-               actuacion.save()
-               messages.add_message(request, messages.SUCCESS, 'Pelicula Guardada Exitosamente')
-#Vamos guardando cada actuación que va recorriendo el cilco for
-#Al terminar el ciclo for, mandamos un mensaje al template para que diga que los datos se guardaron exitosamente
+            cita = formulario.save(commit=False)
+            for doctor_id in request.POST.getlist('doctor'):
+                for paciente_id in request.POST.getlist('paciente'):
+                    cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
+                    cita.save()
+                    messages.add_message(request, messages.SUCCESS, 'Cita Guardada Exitosamente')
     else:
-        formulario = PeliculaForm()
-    return render(request, 'cine/Pelicula_editar.html', {'formulario': formulario})
+        formulario = CitaForm()
+    return render(request, 'citas/cita_nueva.html', {'formulario': formulario})
+
+def cita_editar(request, pk):
+    cita = get_object_or_404(Cita, pk=pk)
+    if request.method == "POST":
+        formulario = CitaForm(request.POST, instance=cita)
+        if formulario.is_valid():
+            cita = formulario.save(commit=False)
+            for doctor_id in request.POST.getlist('doctor'):
+                for paciente_id in request.POST.getlist('paciente'):
+                    cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
+                    cita.save()
+                    messages.add_message(request, messages.SUCCESS, 'Cita Editada Exitosamente')
+    else:
+        formulario = CitaForm(instance=cita)
+    return render(request, 'citas/cita_editar.html', {'formulario': formulario})
+
+
+#-------------------------- Vista de Paciente -----------------------------------
+
+def paciente_lista(request):
+    pacientes = Paciente.objects.all
+    return render(request, 'paciente/paciente_lista.html', {'pacientes':pacientes})
+
+def paciente_detalle(request, pk):
+    pacientes = get_object_or_404(Paciente, pk=pk)
+    return render(request, 'paciente/paciente_detalle.html', {'pacientes': pacientes})
+
+def paciente_nuevo(request):
+    if request.method == "POST":
+        formulario = PacienteForm(request.POST)
+        if formulario.is_valid():
+            paciente = formulario.save(commit=False)
+            paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
+            paciente.save()
+            messages.add_message(request, messages.SUCCESS, 'Paciente Ingresado Exitosamente')
+    else:
+        formulario = PacienteForm()
+    return render(request, 'paciente/paciente_nueva.html', {'formulario': formulario})
+
+def paciente_editar(request, pk):
+    paciente = get_object_or_404(Paciente, pk=pk)
+    if request.method == "POST":
+        formulario = PacienteForm(request.POST, instance=paciente)
+        if formulario.is_valid():
+            paciente = formulario.save(commit=False)
+            paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
+            paciente.save()
+            messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
+    else:
+        formulario = PacienteForm(instance=paciente)
+    return render(request, 'paciente/paciente_editar.html', {'formulario': formulario})
+
+#-------------------------- Vista de Doctor-----------------------------------
+
+def doctor_lista(request):
+    doctores = Doctor.objects.all
+    return render(request, 'doctor/doctor_lista.html', {'doctores':doctores})
+
+def doctor_detalle(request, pk):
+    doctores = get_object_or_404(Doctor, pk=pk)
+    return render(request, 'doctor/doctor_detalle.html', {'doctores': doctores})
+
+def doctor_nuevo(request):
+    if request.method == "POST":
+        formulario = DoctorForm(request.POST)
+        if formulario.is_valid():
+            doctor = formulario.save(commit=False)
+            doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
+            doctor.save()
+            messages.add_message(request, messages.SUCCESS, 'Doctor Ingresado Exitosamente')
+    else:
+        formulario = DoctorForm()
+    return render(request, 'doctor/doctor_nueva.html', {'formulario': formulario})
+
+def doctor_editar(request, pk):
+    doctor = get_object_or_404(Doctor, pk=pk)
+    if request.method == "POST":
+        formulario = DoctorForm(request.POST, instance=doctor)
+        if formulario.is_valid():
+            doctor = formulario.save(commit=False)
+            doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
+            doctor.save()
+            messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
+    else:
+        formulario = DoctorForm(instance=doctor)
+    return render(request, 'doctor/doctor_editar.html', {'formulario': formulario})
