@@ -18,8 +18,9 @@
                  <a href="{% url 'citas.views.cita_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Cita Nueva</a>
                  <a href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Paciente Nuevo</a>
                  <a href="{% url 'citas.views.doctor_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Doctor Nuevo</a>
+                 <a href="{% url 'logout' %}" class="top-menu"><span class="glyphicon glyphicon-log-out"></span></a>
                  {% else %}
-                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-log-out"></span></a>
                  {% endif %}
                         <h1><a href="/">Citas</a></h1>
                         {% if messages %}
