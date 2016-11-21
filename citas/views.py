@@ -1,8 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.template import RequestContext
 from .forms import CitaForm, PacienteForm, DoctorForm
 from citas.models import Doctor, Paciente, Cita
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def cita_lista(request):
     citas = Cita.objects.all
     return render(request, 'citas/cita_lista.html', {'citas':citas})

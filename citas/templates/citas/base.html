@@ -7,16 +7,20 @@
         {% include 'material/includes/material_js.html' %}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"  type="text/css">
         <link rel="stylesheet" href="{% static 'css/cita.css' %}">
            <title>Citas</title>
        </head>
       <body style="display:flex; min-height:100vh; flex-direction:column;">
 
          <div class="page-header">
+           {% if user.is_authenticated %}
                  <a href="{% url 'citas.views.cita_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Cita Nueva</a>
                  <a href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Paciente Nuevo</a>
                  <a href="{% url 'citas.views.doctor_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Doctor Nuevo</a>
+                 {% else %}
+                 <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                 {% endif %}
                         <h1><a href="/">Citas</a></h1>
                         {% if messages %}
                          <ul class="messages">
