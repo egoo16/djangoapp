@@ -9,8 +9,6 @@
          <script src="{% static 'css/js/skel-panels.min.js'%}"></script>
          <script src="{% static 'css/js/init.js'%}"></script>
 
-
-
         {% include 'material/includes/material_css.html' %}
         <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
         {% include 'material/includes/material_js.html' %}
@@ -31,8 +29,8 @@
                <nav id="nav">
                  <ul>
                    <li ><a href="{% url 'citas.views.cita_lista' %}">Citas</a></li>
-                   <li><a href="{% url 'citas.views.paciente_lista' %}">Listado de Pacientes</a></li>
-                   <li><a href="{% url 'citas.views.doctor_lista' %}">Listado de Doctores</a></li>
+                   <li><a href="{% url 'citas.views.paciente_lista' %}">Pacientes</a></li>
+                   <li><a href="{% url 'citas.views.doctor_lista' %}">Doctores</a></li>
                    <li><a href="{% url 'logout' %}">Logout</a></li>
                  </ul>
                </nav>

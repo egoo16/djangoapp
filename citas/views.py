@@ -6,6 +6,7 @@ from .forms import CitaForm, PacienteForm, DoctorForm
 from citas.models import Doctor, Paciente, Cita
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 
 @login_required
@@ -27,7 +28,7 @@ def cita_nueva(request):
                     cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Guardada Exitosamente')
-        return redirect('cita_lista')
+        return redirect('citas.views.cita_detalle', pk=cita.pk)
     else:
         formulario = CitaForm()
     return render(request, 'citas/cita_nueva.html', {'formulario': formulario})
@@ -40,11 +41,10 @@ def cita_editar(request, pk):
             cita = formulario.save(commit=False)
             for doctor_id in request.POST.getlist('doctor'):
                 for paciente_id in request.POST.getlist('paciente'):
-                    cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
+                    #cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Editada Exitosamente')
-        return redirect('cita_lista')
-
+        return redirect('citas.views.cita_detalle', pk=cita.pk)
     else:
         formulario = CitaForm(instance=cita)
     return render(request, 'citas/cita_editar.html', {'formulario': formulario})
@@ -52,7 +52,7 @@ def cita_editar(request, pk):
 def cita_del(request, pk):
     cita = get_object_or_404(Cita, pk=pk)
     cita.delete()
-    return redirect('cita_lista')
+    return redirect('citas.views.cita_lista')
 
 
 #-------------------------- Vista de Paciente -----------------------------------
@@ -84,7 +84,7 @@ def paciente_editar(request, pk):
         formulario = PacienteForm(request.POST, instance=paciente)
         if formulario.is_valid():
             paciente = formulario.save(commit=False)
-            paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
+            #paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
             paciente.save()
             messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
         return redirect('paciente_lista')
@@ -126,7 +126,7 @@ def doctor_editar(request, pk):
         formulario = DoctorForm(request.POST, instance=doctor)
         if formulario.is_valid():
             doctor = formulario.save(commit=False)
-            doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
+            #doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
             doctor.save()
             messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
         return redirect('doctor_lista')

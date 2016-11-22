@@ -18,7 +18,7 @@ def __init__ (self, *args, **kwargs):
 
 #En este caso vamos a usar el widget checkbox multiseleccionable.
 
-        self.fields["actores"].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields["actores"].widget = forms.CheckboxSelectMultiple()
 
 #Podemos usar un texto de ayuda en el widget
 

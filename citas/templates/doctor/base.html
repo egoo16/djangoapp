@@ -2,21 +2,47 @@
 <html lang="es">
 <html>
        <head>
+         <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+         <!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+         <script src="{% static 'css/js/skel.min.js'%}"></script>
+         <script src="{% static 'css/js/skel-panels.min.js'%}"></script>
+         <script src="{% static 'css/js/init.js'%}"></script>
+
         {% include 'material/includes/material_css.html' %}
         <script src="{% static 'material/js/jquery-2.2.0.js' %}"></script>
         {% include 'material/includes/material_js.html' %}
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/cita.css' %}">
-           <title>Doctores</title>
-       </head>
-      <body style="display:flex; min-height:100vh; flex-direction:column;">
+        <title>Doctores</title>
+    </head>
 
-         <div class="page-header">
-           <a href="{% url 'citas.views.cita_nueva' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Cita Nueva</a>
-           <a href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Paciente Nuevo</a>
-           <a href="{% url 'citas.views.doctor_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span>Doctor Nuevo</a>
-                   <h1><a href="/">Paciente</a></h1>
+    <body background-color="#060325">
+      <div id="wrapper">
+
+        <!-- Header -->
+        <div id="header">
+          <div class="">
+            <!-- Nav -->
+            <nav id="nav">
+              <ul>
+                <li ><a href="{% url 'citas.views.cita_lista' %}">Citas</a></li>
+                <li><a href="{% url 'citas.views.paciente_lista' %}">Pacientes</a></li>
+                <li><a href="{% url 'citas.views.doctor_lista' %}">Doctores</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /Header -->
+      <div class="page-header">
+        {% if user.is_authenticated %}
+                   <h1><a href="{% url 'citas.views.doctor_lista' %}">Doctor</a></h1>
+                   {% else %}
+                   <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-log-out"></span></a>
+                   {% endif %}
                         {% if messages %}
                          <ul class="messages">
                              {% for message in messages %}

@@ -1,6 +1,6 @@
 {% extends 'paciente/base.html' %}
 {% block content %}
-<a class="btn btn-default" href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Doctor Nuevo</a>
+<a class="btn btn-default" href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Paciente Nuevo</a>
 
     {% for post in pacientes %}
         <div class="pacientes">
