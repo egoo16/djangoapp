@@ -22,7 +22,7 @@ def __init__ (self, *args, **kwargs):
 #En este caso vamos a usar el widget checkbox multiseleccionable.
         self.fields["paciente"].widget = forms.widgets.CheckboxSelectMultiple()
 #Podemos usar un texto de ayuda en el widget
-        self.fields["paciente"].help_text = "Ingrese los Actores que participaron en la película"
+        self.fields["paciente"].help_text = "Seleccione el paciente asignado"
 #En este caso le indicamos que nos muestre todos los actores, pero aquí podríamos filtrar datos si fuera necesario
         self.fields["paciente"].queryset = Paciente.objects.all()
 

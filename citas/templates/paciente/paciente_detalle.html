@@ -4,6 +4,7 @@
        <div class="Doctor">
            {% if pacientes.nombre %}
            {% endif %}
+           <a class="btn btn-default" href="{% url 'paciente_del' pk=pacientes.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
            <a class="btn btn-default" href="{% url 'paciente_editar' pk=pacientes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
            <h4>Nombre: {{ pacientes.nombre }}</h4>
            <h1>Telefono: {{ pacientes.telefono }}</h1>

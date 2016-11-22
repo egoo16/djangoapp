@@ -1,12 +1,12 @@
 h1 a {
     color: #18083F;
-    font-family: 'Lobster';
+    font-family: 'Noto Serif', serif;
 }
 
 .page-header {
-      background-color: #483379;
+      background-color: #7F821A;
       margin-top: 0;
-      padding: 20px 20px 20px 40px;
+      padding: 5px 20px 5px 30px;
   }
 
   .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
@@ -20,7 +20,7 @@ h1 a {
   }
 
   h1, h2, h3, h4 {
-      font-family: 'Lobster', cursive;
+      font-family: 'Noto Serif', serif;
   }
 
   .date {

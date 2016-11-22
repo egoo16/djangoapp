@@ -1,5 +1,7 @@
 {% extends 'paciente/base.html' %}
 {% block content %}
+<a class="btn btn-default" href="{% url 'citas.views.paciente_nuevo' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span> Doctor Nuevo</a>
+
     {% for post in pacientes %}
         <div class="pacientes">
             <h1><a href="{% url 'citas.views.paciente_detalle' pk=post.pk %}">{{ post.nombre }}</a></h1>

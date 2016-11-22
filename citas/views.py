@@ -27,6 +27,7 @@ def cita_nueva(request):
                     cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Guardada Exitosamente')
+        return redirect('cita_lista')
     else:
         formulario = CitaForm()
     return render(request, 'citas/cita_nueva.html', {'formulario': formulario})
@@ -42,9 +43,16 @@ def cita_editar(request, pk):
                     cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Editada Exitosamente')
+        return redirect('cita_lista')
+
     else:
         formulario = CitaForm(instance=cita)
     return render(request, 'citas/cita_editar.html', {'formulario': formulario})
+
+def cita_del(request, pk):
+    cita = get_object_or_404(Cita, pk=pk)
+    cita.delete()
+    return redirect('cita_lista')
 
 
 #-------------------------- Vista de Paciente -----------------------------------
@@ -65,6 +73,7 @@ def paciente_nuevo(request):
             paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
             paciente.save()
             messages.add_message(request, messages.SUCCESS, 'Paciente Ingresado Exitosamente')
+        return redirect('paciente_nuevo')
     else:
         formulario = PacienteForm()
     return render(request, 'paciente/paciente_nueva.html', {'formulario': formulario})
@@ -78,9 +87,15 @@ def paciente_editar(request, pk):
             paciente = Paciente(nombre = formulario.cleaned_data['nombre'], telefono = formulario.cleaned_data['telefono'])
             paciente.save()
             messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
+        return redirect('paciente_lista')
     else:
         formulario = PacienteForm(instance=paciente)
     return render(request, 'paciente/paciente_editar.html', {'formulario': formulario})
+
+def paciente_del(request, pk):
+    paciente = get_object_or_404(Paciente, pk=pk)
+    paciente.delete()
+    return redirect('paciente_lista')
 
 #-------------------------- Vista de Doctor-----------------------------------
 
@@ -100,6 +115,7 @@ def doctor_nuevo(request):
             doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
             doctor.save()
             messages.add_message(request, messages.SUCCESS, 'Doctor Ingresado Exitosamente')
+        return redirect('doctor_lista')
     else:
         formulario = DoctorForm()
     return render(request, 'doctor/doctor_nueva.html', {'formulario': formulario})
@@ -113,6 +129,12 @@ def doctor_editar(request, pk):
             doctor = Doctor(nombre = formulario.cleaned_data['nombre'],clinica = formulario.cleaned_data['clinica'], telefono = formulario.cleaned_data['telefono'])
             doctor.save()
             messages.add_message(request, messages.SUCCESS, 'Paciente Editado Exitosamente')
+        return redirect('doctor_lista')
     else:
         formulario = DoctorForm(instance=doctor)
     return render(request, 'doctor/doctor_editar.html', {'formulario': formulario})
+
+def doctor_del(request, pk):
+    doctor = get_object_or_404(Doctor, pk=pk)
+    doctor.delete()
+    return redirect('doctor_lista')
