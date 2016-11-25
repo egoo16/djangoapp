@@ -28,7 +28,7 @@ def cita_nueva(request):
                     cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Guardada Exitosamente')
-        return redirect('citas.views.cita_detalle', pk=cita.pk)
+        return redirect('citas.views.cita_lista')
     else:
         formulario = CitaForm()
     return render(request, 'citas/cita_nueva.html', {'formulario': formulario})
@@ -44,7 +44,7 @@ def cita_editar(request, pk):
                     #cita = Cita(doctor_id=doctor_id, paciente_id = paciente_id,fecha = formulario.cleaned_data['fecha'], hora = formulario.cleaned_data['hora'], obs = formulario.cleaned_data['obs'])
                     cita.save()
                     messages.add_message(request, messages.SUCCESS, 'Cita Editada Exitosamente')
-        return redirect('citas.views.cita_detalle', pk=cita.pk)
+        return redirect('citas.views.cita_lista')
     else:
         formulario = CitaForm(instance=cita)
     return render(request, 'citas/cita_editar.html', {'formulario': formulario})
